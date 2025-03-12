@@ -47,12 +47,27 @@ fn main() {
 
     #[allow(dead_code)] // disable 'dead_code', which warn against unused module
 
+    
+
+    use std::fmt; 
+
     struct Structure(i32);
+
+    impl fmt::Display for Structure {
+        // this trait requires 'fmt' with this exact signature.
+        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+            // Write strictly the first element into the supplied output
+            // stream: 'f'. Returens 'fmt::Result' which indicates
+            // whether the operation is succeeded or failed. Note that
+            // write! uses syntax which is very similar to println!
+            write!(f, "{}", self.0)
+        }
+    }
 
     // This will not compile because 'Structure' does not implement
     // fmt::Display.
 
-    // println!("This struct '{}' will not print...", Structure(3));
+    println!("This struct '{}' will not print...", Structure(3));
 
     // For rust 1.58 and above, you can directly capture the argument
     // from a surrounding variable. Just like the above, this will 
